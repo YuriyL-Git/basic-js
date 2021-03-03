@@ -5,7 +5,6 @@ module.exports = function createDreamTeam(members) {
     let out = ''
     members.forEach(m => {
             if (typeof m === 'string') out += m.trim()[0]
-        }
-    )
+        })
     return out.toUpperCase().split('').sort().join('')
 };
