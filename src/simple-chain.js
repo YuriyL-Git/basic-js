@@ -1,42 +1,36 @@
 const CustomError = require("../extensions/custom-error");
 
 const chainMaker = {
-  chain: '',
+  res: [],
+
   getLength() {
-    return this.chain.split(' )~~( ').length;
+    return this.res.length;
   },
+
   addLink(value) {
-    let res = this.chain.split(' )~~( ')
-    if (this.chain === '') res = []
     if (typeof value === 'undefined') value = ' '
-    res.push(String(value))
-    this.chain = res.join(' )~~( ')
+    this.res.push(String(value))
     return this
   },
 
   removeLink(position) {
-   // if (typeof position !== 'number') throw new Error
-    let res = this.chain.split(' )~~( ')
-    if (position < 0 || position > res.length - 1 || typeof position !== 'number'){
-      this.chain = ''
+    if (position < 0 || position > this.res.length - 1 || typeof position !== 'number') {
+      this.res = []
       throw new Error
     }
-    res.splice(position-1, 1)
-    this.chain = res.join(' )~~( ')
+    this.res.splice(position - 1, 1)
     return this
   },
 
   reverseChain() {
-    let res = this.chain.split(' )~~( ')
-    res.reverse()
-    this.chain = res.join(' )~~( ')
+    this.res.reverse()
     return this
   },
 
   finishChain() {
     let result = ''
-    if (this.chain.length > 0) result = '( ' + this.chain + ' )'
-    this.chain = ''
+    if (this.res.length > 0) result = '( ' + this.res.join(' )~~( ') + ' )'
+    this.res = []
     return result
   }
 };
